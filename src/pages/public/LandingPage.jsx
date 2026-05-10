@@ -26,7 +26,7 @@ const LandingPage = () => {
     >
       <h1
         style={{
-          fontSize: "4rem",
+          fontSize: "clamp(2.5rem, 8vw, 4rem)",
           fontWeight: "900",
           marginBottom: "1rem",
           color: "var(--text-primary)",
@@ -36,7 +36,7 @@ const LandingPage = () => {
       </h1>
       <p
         style={{
-          fontSize: "1.25rem",
+          fontSize: "clamp(1rem, 4vw, 1.25rem)",
           color: "var(--text-secondary)",
           maxWidth: "600px",
           marginBottom: "3rem",
@@ -45,7 +45,7 @@ const LandingPage = () => {
         Your favorite food, delivered fast and fresh. Discover restaurants,
         order a delicious meal, and track it in real-time.
       </p>
-      <div style={{ display: "flex", gap: "1.5rem" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1.5rem" }}>
         <Link
           to="/register"
           style={{

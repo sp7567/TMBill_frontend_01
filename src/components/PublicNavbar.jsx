@@ -14,9 +14,11 @@ const PublicNavbar = () => {
         position: "sticky",
         top: 0,
         zIndex: 50,
+        flexWrap: "wrap",
+        gap: "1rem"
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "2rem", flexWrap: "wrap" }}>
         <Link
           to="/"
           style={{ fontSize: "1.5rem", fontWeight: "800", color: "#ef4444" }}
@@ -29,6 +31,7 @@ const PublicNavbar = () => {
             gap: "1.5rem",
             fontWeight: "500",
             color: "var(--text-secondary)",
+            flexWrap: "wrap",
           }}
         >
           <Link to="/" className="hover-link">
@@ -43,7 +46,7 @@ const PublicNavbar = () => {
         </div>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
         <Link
           to="/login"
           style={{ fontWeight: "500", color: "var(--text-secondary)" }}
