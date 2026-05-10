@@ -8,10 +8,7 @@ const STATUS_COLORS = {
 };
 
 const KPI = ({ icon: Icon, label, value, color }) => (
-  <div style={{
-    background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 16,
-    padding: "20px 24px", display: "flex", alignItems: "center", gap: 16,
-  }}>
+  <div className="card" style={{ padding: "20px 24px", display: "flex", alignItems: "center", gap: 16 }}>
     <div style={{ width: 48, height: 48, borderRadius: 14, background: `${color}18`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
       <Icon size={22} color={color} />
     </div>
@@ -47,7 +44,7 @@ const AdminDashboard = () => {
   }, []);
 
   if (error) return (
-    <div style={{ padding: "40px", color: "#ef4444" }}>
+    <div className="page-container" style={{ color: "#ef4444" }}>
       <p style={{ fontWeight: 700, fontSize: 15 }}>⚠️ Failed to load dashboard</p>
       <p style={{ fontSize: 13, marginTop: 6, color: "var(--text-muted)" }}>{error}</p>
       <button onClick={() => window.location.reload()} style={{ marginTop: 12, padding: "8px 16px", borderRadius: 8, background: "#6366f1", color: "#fff", border: "none", cursor: "pointer", fontSize: 13 }}>Retry</button>
@@ -55,12 +52,16 @@ const AdminDashboard = () => {
   );
 
   return (
-    <div style={{ padding: "32px 40px", maxWidth: 1200 }}>
-      <h1 style={{ fontSize: 22, fontWeight: 800, color: "var(--text-primary)", marginBottom: 4 }}>Admin Dashboard</h1>
-      <p style={{ color: "var(--text-muted)", marginBottom: 28, fontSize: 14 }}>Platform-wide overview & recent activity</p>
+    <div className="page-container">
+      <div className="page-header">
+        <div>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: "var(--text-primary)", marginBottom: 4 }}>Admin Dashboard</h1>
+          <p style={{ color: "var(--text-muted)", fontSize: 14 }}>Platform-wide overview & recent activity</p>
+        </div>
+      </div>
 
       {/* KPI Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginBottom: 28 }}>
+      <div className="grid-4" style={{ marginBottom: 28 }}>
         <KPI icon={Users}       label="Total Users"   value={loading ? "…" : stats?.users       ?? 0} color="#6366f1" />
         <KPI icon={Store}       label="Restaurants"   value={loading ? "…" : stats?.restaurants ?? 0} color="#f59e0b" />
         <KPI icon={ShoppingBag} label="Total Orders"  value={loading ? "…" : stats?.orders      ?? 0} color="#10b981" />
@@ -68,7 +69,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* Recent Orders Table */}
-      <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 16, overflow: "hidden" }}>
+      <div className="card" style={{ padding: 0, overflow: "hidden" }}>
         <div style={{ padding: "16px 24px", borderBottom: "1px solid var(--border)", display: "flex", alignItems: "center", gap: 8 }}>
           <Clock size={16} color="#6366f1" />
           <h2 style={{ fontSize: 14, fontWeight: 700, color: "var(--text-primary)" }}>Recent Orders</h2>
@@ -96,11 +97,11 @@ const AdminDashboard = () => {
                   <td style={{ padding: "12px 16px" }}>
                     <span style={{ padding: "3px 10px", borderRadius: 9999, fontSize: 11, fontWeight: 700,
                       background: `${STATUS_COLORS[o.status] ?? "#6366f1"}22`,
-                      color: STATUS_COLORS[o.status] ?? "#6366f1" }}>
+                      color: STATUS_COLORS[o.status] ?? "#6366f1", whiteSpace: "nowrap" }}>
                       {o.status}
                     </span>
                   </td>
-                  <td style={{ padding: "12px 16px", color: "var(--text-muted)", fontSize: 12 }}>
+                  <td style={{ padding: "12px 16px", color: "var(--text-muted)", fontSize: 12, whiteSpace: "nowrap" }}>
                     {new Date(o.createdAt).toLocaleDateString("en-IN")}
                   </td>
                 </tr>

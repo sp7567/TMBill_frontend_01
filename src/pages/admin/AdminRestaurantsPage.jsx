@@ -14,13 +14,17 @@ const AdminRestaurantsPage = () => {
   }, []);
 
   return (
-    <div style={{ padding: "32px 40px" }}>
-      <h1 style={{ fontSize: 22, fontWeight: 800, color: "var(--text-primary)", marginBottom: 4 }}>All Restaurants</h1>
-      <p style={{ color: "var(--text-muted)", marginBottom: 24, fontSize: 14 }}>{restaurants.length} restaurants on the platform</p>
+    <div className="page-container">
+      <div className="page-header">
+        <div>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: "var(--text-primary)", marginBottom: 4 }}>All Restaurants</h1>
+          <p style={{ color: "var(--text-muted)", fontSize: 14 }}>{restaurants.length} restaurants on the platform</p>
+        </div>
+      </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
+      <div className="grid-cards">
         {loading ? <p style={{ color: "var(--text-muted)" }}>Loading...</p> : restaurants.map(r => (
-          <div key={r._id} style={{ background: "var(--bg-card)", border: "1px solid #1e293b", borderRadius: 16, overflow: "hidden" }}>
+          <div key={r._id} className="card" style={{ padding: 0, overflow: "hidden" }}>
             {/* Banner */}
             <div style={{ height: 80, background: "linear-gradient(135deg, #1e293b, #0f172a)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <div style={{ width: 48, height: 48, borderRadius: 12, background: "#6366f122", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -39,7 +43,7 @@ const AdminRestaurantsPage = () => {
                 </span>
               </div>
               <p style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 8 }}>{r.address}</p>
-              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, paddingTop: 12, borderTop: "1px solid #1e293b" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, paddingTop: 12, borderTop: "1px solid var(--border)" }}>
                 <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Owner: <b style={{ color: "var(--text-primary)" }}>{r.owner_id?.name ?? "—"}</b></span>
                 <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, color: "#f59e0b" }}>
                   <Star size={12} fill="#f59e0b" /> {r.rating.toFixed(1)}

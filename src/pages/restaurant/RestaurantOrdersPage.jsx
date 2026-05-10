@@ -46,13 +46,13 @@ const RestaurantOrdersPage = () => {
   const filtered = filter === "all" ? orders : orders.filter(o => o.status === filter);
 
   return (
-    <div style={{ padding: "32px 40px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+    <div className="page-container">
+      <div className="page-header">
         <div>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: "var(--text-primary)" }}>Incoming Orders</h1>
           <p style={{ color: "var(--text-muted)", fontSize: 14, marginTop: 2 }}>Real-time order management</p>
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
           {["all","PLACED","CONFIRMED","PREPARING","READY","DELIVERED"].map(s => (
             <button key={s} onClick={() => setFilter(s)}
               style={{ padding: "6px 14px", borderRadius: 9999, fontSize: 12, fontWeight: 600, cursor: "pointer", border: "1px solid",
@@ -68,8 +68,8 @@ const RestaurantOrdersPage = () => {
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {filtered.length === 0 && <p style={{ color: "var(--text-muted)", textAlign: "center", padding: 40 }}>No orders found.</p>}
           {filtered.map(order => (
-            <div key={order._id} style={{ background: "var(--bg-card)", border: `1px solid ${STATUS_COLORS[order.status]}33`, borderRadius: 14, padding: "18px 22px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
+            <div key={order._id} className="card" style={{ border: `1px solid ${STATUS_COLORS[order.status]}33`, padding: "18px 22px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12, flexWrap: "wrap", gap: 12 }}>
                 <div>
                   <p style={{ fontWeight: 700, color: "var(--text-primary)", fontSize: 14 }}>
                     Order <span style={{ fontFamily: "monospace", color: "#818cf8" }}>#{order._id.slice(-6).toUpperCase()}</span>
@@ -98,7 +98,7 @@ const RestaurantOrdersPage = () => {
 
               {/* Actions */}
               {NEXT_STATUS[order.status] && (
-                <div style={{ display: "flex", gap: 8 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   <button onClick={() => updateStatus(order._id, NEXT_STATUS[order.status])}
                     style={{ padding: "8px 20px", borderRadius: 10, background: "#f59e0b", color: "#000", fontWeight: 700, border: "none", cursor: "pointer", fontSize: 13 }}>
                     ✓ Mark as {NEXT_STATUS[order.status]}

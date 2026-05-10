@@ -40,8 +40,8 @@ const MenuPage = () => {
   const categories = [...new Set(items.map(i => i.category))];
 
   return (
-    <div style={{ padding: "32px 40px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 24 }}>
+    <div className="page-container">
+      <div className="page-header">
         <div>
           <h1 style={{ fontSize: 22, fontWeight: 800, color: "var(--text-primary)" }}>Menu Management</h1>
           <p style={{ color: "var(--text-muted)", fontSize: 14, marginTop: 2 }}>{items.length} items on your menu</p>
@@ -54,18 +54,18 @@ const MenuPage = () => {
 
       {/* Add form */}
       {showForm && (
-        <form onSubmit={addItem} style={{ background: "var(--bg-card)", border: "1px solid #f59e0b33", borderRadius: 16, padding: 24, marginBottom: 24 }}>
+        <form className="card" onSubmit={addItem} style={{ border: "1px solid #f59e0b33", marginBottom: 24 }}>
           <h3 style={{ color: "#fbbf24", fontWeight: 700, marginBottom: 16, fontSize: 14 }}>New Menu Item</h3>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14 }}>
             {[["name","Item Name"],["category","Category"],["price","Price (₹)"],["description","Description"]].map(([k,l]) => (
               <div key={k} style={{ gridColumn: k === "description" ? "1/-1" : undefined }}>
                 <label style={{ display: "block", fontSize: 11, color: "var(--text-muted)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>{l}</label>
                 <input type={k === "price" ? "number" : "text"} required value={form[k]} onChange={e => setForm(p => ({...p, [k]: e.target.value}))} placeholder={l}
-                  style={{ width: "100%", padding: "10px 14px", borderRadius: 10, background: "var(--bg-input)", border: "1px solid #334155", color: "var(--text-primary)", fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                  style={{ width: "100%", padding: "10px 14px", borderRadius: 10, background: "var(--bg-input)", border: "1px solid var(--border)", color: "var(--text-primary)", fontSize: 13, outline: "none", boxSizing: "border-box" }} />
               </div>
             ))}
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 14 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10, marginTop: 14 }}>
             <button type="button" onClick={() => setForm(p => ({...p, isVeg: !p.isVeg}))}
               style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 10, border: `1px solid ${form.isVeg ? "#10b981" : "#ef4444"}44`,
                 background: `${form.isVeg ? "#10b981" : "#ef4444"}15`, color: form.isVeg ? "#34d399" : "#f87171", cursor: "pointer", fontWeight: 600, fontSize: 13 }}>
@@ -83,37 +83,39 @@ const MenuPage = () => {
       {categories.map(cat => (
         <div key={cat} style={{ marginBottom: 28 }}>
           <h3 style={{ fontSize: 13, fontWeight: 700, color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 10 }}>{cat}</h3>
-          <div style={{ background: "var(--bg-card)", border: "1px solid #1e293b", borderRadius: 14, overflow: "hidden" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
-              <thead><tr style={{ background: "var(--bg-input)" }}>
-                {["Item","Price","Type","Status","Actions"].map(h =>
-                  <th key={h} style={{ padding: "9px 16px", textAlign: "left", color: "var(--text-muted)", fontWeight: 600, fontSize: 11, textTransform: "uppercase" }}>{h}</th>)}
-              </tr></thead>
-              <tbody>
-                {items.filter(i => i.category === cat).map((item, idx) => (
-                  <tr key={item._id} style={{ borderTop: "1px solid #1e293b", background: idx % 2 ? "#0a1021" : "transparent" }}>
-                    <td style={{ padding: "12px 16px" }}>
-                      <p style={{ color: "#e2e8f0", fontWeight: 600 }}>{item.name}</p>
-                      {item.description && <p style={{ color: "var(--text-muted)", fontSize: 11, marginTop: 2 }}>{item.description}</p>}
-                    </td>
-                    <td style={{ padding: "12px 16px", color: "#10b981", fontWeight: 700 }}>₹{item.price}</td>
-                    <td style={{ padding: "12px 16px" }}>
-                      <span style={{ fontSize: 11, fontWeight: 700, color: item.isVeg ? "#34d399" : "#f87171" }}>{item.isVeg ? "🟢 Veg" : "🔴 Non-Veg"}</span>
-                    </td>
-                    <td style={{ padding: "12px 16px" }}>
-                      <button onClick={() => toggleAvail(item._id, item.isAvailable)} style={{ background: "none", border: "none", cursor: "pointer" }}>
-                        {item.isAvailable ? <ToggleRight size={24} color="#10b981"/> : <ToggleLeft size={24} color="var(--text-secondary)"/>}
-                      </button>
-                    </td>
-                    <td style={{ padding: "12px 16px" }}>
-                      <button onClick={() => deleteItem(item._id)} style={{ background: "#ef444422", border: "1px solid #ef444433", color: "#ef4444", padding: "5px 10px", borderRadius: 8, cursor: "pointer", fontSize: 12 }}>
-                        <Trash2 size={13}/>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+                <thead><tr style={{ background: "var(--bg-input)" }}>
+                  {["Item","Price","Type","Status","Actions"].map(h =>
+                    <th key={h} style={{ padding: "9px 16px", textAlign: "left", color: "var(--text-muted)", fontWeight: 600, fontSize: 11, textTransform: "uppercase", whiteSpace: "nowrap" }}>{h}</th>)}
+                </tr></thead>
+                <tbody>
+                  {items.filter(i => i.category === cat).map((item, idx) => (
+                    <tr key={item._id} style={{ borderTop: "1px solid var(--border)", background: idx % 2 ? "var(--table-alt)" : "transparent" }}>
+                      <td style={{ padding: "12px 16px" }}>
+                        <p style={{ color: "var(--text-primary)", fontWeight: 600 }}>{item.name}</p>
+                        {item.description && <p style={{ color: "var(--text-muted)", fontSize: 11, marginTop: 2 }}>{item.description}</p>}
+                      </td>
+                      <td style={{ padding: "12px 16px", color: "#10b981", fontWeight: 700 }}>₹{item.price}</td>
+                      <td style={{ padding: "12px 16px" }}>
+                        <span style={{ fontSize: 11, fontWeight: 700, color: item.isVeg ? "#34d399" : "#f87171", whiteSpace: "nowrap" }}>{item.isVeg ? "🟢 Veg" : "🔴 Non-Veg"}</span>
+                      </td>
+                      <td style={{ padding: "12px 16px" }}>
+                        <button onClick={() => toggleAvail(item._id, item.isAvailable)} style={{ background: "none", border: "none", cursor: "pointer" }}>
+                          {item.isAvailable ? <ToggleRight size={24} color="#10b981"/> : <ToggleLeft size={24} color="var(--text-secondary)"/>}
+                        </button>
+                      </td>
+                      <td style={{ padding: "12px 16px" }}>
+                        <button onClick={() => deleteItem(item._id)} style={{ background: "#ef444422", border: "1px solid #ef444433", color: "#ef4444", padding: "5px 10px", borderRadius: 8, cursor: "pointer", fontSize: 12 }}>
+                          <Trash2 size={13}/>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       ))}

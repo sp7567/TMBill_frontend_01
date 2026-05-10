@@ -43,7 +43,7 @@ const MenuOrderPage = () => {
   const categories = [...new Set(menu.map(i => i.category))];
 
   return (
-    <div style={{ padding: "28px 32px", maxWidth: 900 }}>
+    <div className="page-container" style={{ maxWidth: 900 }}>
       <button onClick={() => navigate("/customer")}
         style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--text-muted)", background: "none", border: "none", cursor: "pointer", fontSize: 13, marginBottom: 16 }}>
         <ArrowLeft size={14} /> Back
@@ -56,14 +56,14 @@ const MenuOrderPage = () => {
         </div>
       )}
 
-      <div style={{ display: "flex", gap: 24 }}>
-        <div style={{ flex: 1 }}>
+      <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+        <div style={{ flex: "1 1 400px" }}>
           {categories.map(cat => (
             <div key={cat} style={{ marginBottom: 20 }}>
               <h3 style={{ fontSize: 11, fontWeight: 700, color: "#10b981", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 10 }}>{cat}</h3>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 {menu.filter(m => m.category === cat).map(item => (
-                  <div key={item._id} style={{ background: "var(--bg-card)", border: "1px solid #1e293b", borderRadius: 12, padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div key={item._id} className="card" style={{ padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
                     <div>
                       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                         <span style={{ fontSize: 10 }}>{item.isVeg ? "🟢" : "🔴"}</span>
@@ -75,7 +75,7 @@ const MenuOrderPage = () => {
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       {cart[item._id] ? (
                         <>
-                          <button onClick={() => dec(item)} style={{ width: 26, height: 26, borderRadius: 7, background: "var(--bg-input)", border: "1px solid #334155", color: "var(--text-primary)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <button onClick={() => dec(item)} style={{ width: 26, height: 26, borderRadius: 7, background: "var(--bg-input)", border: "1px solid var(--border-2)", color: "var(--text-primary)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <Minus size={11} />
                           </button>
                           <span style={{ fontWeight: 700, color: "#10b981", minWidth: 18, textAlign: "center" }}>{cart[item._id]}</span>
@@ -97,8 +97,8 @@ const MenuOrderPage = () => {
         </div>
 
         {/* Cart */}
-        <div style={{ width: 260, flexShrink: 0 }}>
-          <div style={{ background: "var(--bg-card)", border: "1px solid #1e293b", borderRadius: 14, padding: 18, position: "sticky", top: 24 }}>
+        <div style={{ flex: "1 1 260px", maxWidth: "100%" }}>
+          <div className="card" style={{ padding: 18, position: "sticky", top: 24 }}>
             <h3 style={{ fontWeight: 700, color: "var(--text-primary)", fontSize: 14, marginBottom: 12, display: "flex", alignItems: "center", gap: 7 }}>
               <ShoppingCart size={16} color="#10b981" /> Cart
             </h3>
@@ -111,13 +111,13 @@ const MenuOrderPage = () => {
                     const item = menu.find(m => m._id === itemId);
                     return item ? (
                       <div key={itemId} style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
-                        <span style={{ color: "#cbd5e1" }}>{item.name} ×{qty}</span>
+                        <span style={{ color: "var(--text-secondary)" }}>{item.name} ×{qty}</span>
                         <span style={{ color: "#10b981", fontWeight: 700 }}>₹{(item.price * qty).toFixed(0)}</span>
                       </div>
                     ) : null;
                   })}
                 </div>
-                <div style={{ borderTop: "1px solid #1e293b", paddingTop: 10, marginBottom: 12 }}>
+                <div style={{ borderTop: "1px solid var(--border)", paddingTop: 10, marginBottom: 12 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 800, color: "var(--text-primary)", fontSize: 14 }}>
                     <span>Total</span>
                     <span style={{ color: "#10b981" }}>₹{total.toFixed(0)}</span>

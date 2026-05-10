@@ -39,19 +39,23 @@ const AdminUsersPage = () => {
   };
 
   return (
-    <div style={{ padding: "32px 40px" }}>
-      <h1 style={{ fontSize: 22, fontWeight: 800, color: "var(--text-primary)", marginBottom: 4 }}>User Management</h1>
-      <p style={{ color: "var(--text-muted)", marginBottom: 24, fontSize: 14 }}>View and manage all platform users</p>
+    <div className="page-container">
+      <div className="page-header">
+        <div>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: "var(--text-primary)", marginBottom: 4 }}>User Management</h1>
+          <p style={{ color: "var(--text-muted)", fontSize: 14 }}>View and manage all platform users</p>
+        </div>
+      </div>
 
       {/* Filters */}
-      <div style={{ display: "flex", gap: 12, marginBottom: 24 }}>
-        <div style={{ position: "relative", flex: 1, maxWidth: 320 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 24 }}>
+        <div style={{ position: "relative", flex: 1, minWidth: 200, maxWidth: 320 }}>
           <Search size={15} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)" }} />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by name or email..."
-            style={{ width: "100%", paddingLeft: 36, paddingRight: 16, paddingTop: 10, paddingBottom: 10, borderRadius: 10, background: "var(--bg-card)", border: "1px solid #1e293b", color: "var(--text-primary)", fontSize: 13, outline: "none" }} />
+            style={{ width: "100%", paddingLeft: 36, paddingRight: 16, paddingTop: 10, paddingBottom: 10, borderRadius: 10, background: "var(--bg-card)", border: "1px solid var(--border)", color: "var(--text-primary)", fontSize: 13, outline: "none" }} />
         </div>
         <select value={role} onChange={e => setRole(e.target.value)}
-          style={{ padding: "10px 14px", borderRadius: 10, background: "var(--bg-card)", border: "1px solid #1e293b", color: "var(--text-secondary)", fontSize: 13, outline: "none" }}>
+          style={{ padding: "10px 14px", borderRadius: 10, background: "var(--bg-card)", border: "1px solid var(--border)", color: "var(--text-secondary)", fontSize: 13, outline: "none" }}>
           <option value="">All Roles</option>
           <option value="admin">Admin</option>
           <option value="restaurant">Restaurant</option>
@@ -60,46 +64,50 @@ const AdminUsersPage = () => {
       </div>
 
       {/* Table */}
-      <div style={{ background: "var(--bg-card)", border: "1px solid #1e293b", borderRadius: 16, overflow: "hidden" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
-          <thead>
-            <tr style={{ background: "var(--bg-input)" }}>
-              {["User","Email","Role","Joined","Action"].map(h => (
-                <th key={h} style={{ padding: "10px 16px", textAlign: "left", color: "var(--text-muted)", fontWeight: 600, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.05em" }}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr><td colSpan={5} style={{ padding: 40, textAlign: "center", color: "var(--text-muted)" }}>Loading...</td></tr>
-            ) : users.map((u, i) => (
-              <tr key={u._id} style={{ borderTop: "1px solid #1e293b", background: i % 2 ? "var(--table-alt)" : "transparent" }}>
-                <td style={{ padding: "12px 16px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <div style={{ width: 32, height: 32, borderRadius: "50%", background: "var(--bg-input)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <UserCircle size={18} color="var(--text-muted)" />
-                    </div>
-                    <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>{u.name}</span>
-                  </div>
-                </td>
-                <td style={{ padding: "12px 16px", color: "var(--text-secondary)" }}>{u.email}</td>
-                <td style={{ padding: "12px 16px" }}>
-                  <span style={{ padding: "3px 10px", borderRadius: 9999, fontSize: 11, fontWeight: 700,
-                    background: ROLE_STYLES[u.role]?.bg, color: ROLE_STYLES[u.role]?.color }}>
-                    {u.role}
-                  </span>
-                </td>
-                <td style={{ padding: "12px 16px", color: "var(--text-muted)" }}>{new Date(u.createdAt).toLocaleDateString()}</td>
-                <td style={{ padding: "12px 16px" }}>
-                  <button onClick={() => deleteUser(u._id, u.name)}
-                    style={{ background: "#ef444422", border: "1px solid #ef444433", color: "#ef4444", padding: "5px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, display: "flex", alignItems: "center", gap: 5 }}>
-                    <Trash2 size={13} /> Delete
-                  </button>
-                </td>
+      <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+            <thead>
+              <tr style={{ background: "var(--bg-input)" }}>
+                {["User","Email","Role","Joined","Action"].map(h => (
+                  <th key={h} style={{ padding: "10px 16px", textAlign: "left", color: "var(--text-muted)", fontWeight: 600, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{h}</th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr><td colSpan={5} style={{ padding: 40, textAlign: "center", color: "var(--text-muted)" }}>Loading...</td></tr>
+              ) : users.length === 0 ? (
+                <tr><td colSpan={5} style={{ padding: 40, textAlign: "center", color: "var(--text-muted)" }}>No users found.</td></tr>
+              ) : users.map((u, i) => (
+                <tr key={u._id} style={{ borderTop: "1px solid var(--border)", background: i % 2 ? "var(--table-alt)" : "transparent" }}>
+                  <td style={{ padding: "12px 16px", whiteSpace: "nowrap" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <div style={{ width: 32, height: 32, borderRadius: "50%", background: "var(--bg-input)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <UserCircle size={18} color="var(--text-muted)" />
+                      </div>
+                      <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>{u.name}</span>
+                    </div>
+                  </td>
+                  <td style={{ padding: "12px 16px", color: "var(--text-secondary)" }}>{u.email}</td>
+                  <td style={{ padding: "12px 16px" }}>
+                    <span style={{ padding: "3px 10px", borderRadius: 9999, fontSize: 11, fontWeight: 700,
+                      background: ROLE_STYLES[u.role]?.bg, color: ROLE_STYLES[u.role]?.color }}>
+                      {u.role}
+                    </span>
+                  </td>
+                  <td style={{ padding: "12px 16px", color: "var(--text-muted)", whiteSpace: "nowrap" }}>{new Date(u.createdAt).toLocaleDateString()}</td>
+                  <td style={{ padding: "12px 16px" }}>
+                    <button onClick={() => deleteUser(u._id, u.name)}
+                      style={{ background: "#ef444422", border: "1px solid #ef444433", color: "#ef4444", padding: "5px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, display: "flex", alignItems: "center", gap: 5 }}>
+                      <Trash2 size={13} /> Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

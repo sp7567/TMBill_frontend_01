@@ -1,38 +1,14 @@
 const ContactPage = () => {
   return (
-    <div
-      style={{
-        flex: 1,
-        padding: "4rem 2rem",
-        maxWidth: "800px",
-        margin: "0 auto",
-        color: "var(--text-primary)",
-      }}
-    >
+    <div className="page-container" style={{ maxWidth: 800, margin: "0 auto", color: "var(--text-primary)" }}>
       <h1 style={{ fontSize: "3rem", fontWeight: "800", marginBottom: "2rem" }}>
         Contact Us
       </h1>
-      <p
-        style={{
-          fontSize: "1.125rem",
-          color: "var(--text-secondary)",
-          marginBottom: "2rem",
-        }}
-      >
+      <p style={{ fontSize: "1.125rem", color: "var(--text-secondary)", marginBottom: "2rem" }}>
         Have questions? We would love to hear from you. Reach out to our support
         team and we will get back to you as soon as possible.
       </p>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
-          background: "var(--bg-card)",
-          padding: "2rem",
-          borderRadius: "12px",
-          border: "1px solid var(--border)",
-        }}
-      >
+      <div className="card" style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         <div>
           <strong style={{ display: "block", marginBottom: "0.5rem" }}>
             Email:
