@@ -205,6 +205,8 @@ div, aside, main, nav, section, header, table, tr, td, th, input, textarea, sele
     justify-content: space-between;
     align-items: center;
     padding: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
   }
   
   .app-sidebar-nav {
@@ -233,6 +235,8 @@ div, aside, main, nav, section, header, table, tr, td, th, input, textarea, sele
     align-items: center;
     justify-content: space-between;
     padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .page-container {
